@@ -81,6 +81,61 @@ public class Randomizer : MonoBehaviour
 // ReSharper restore InconsistentNaming
     #endregion
 
+    #region Accessors
+    /// <summary>
+    /// Returns the index of the variable with the specified variableName.
+    /// </summary>
+    /// <param name="variableName">the variableName of the desired variable</param>
+    /// <param name="throwOnNotFound">If true, throw KeyNotFoundException if there is no variable with the specified name.</param>
+    /// <returns>Its index in the variables array, or -1 if no such variable.</returns>
+    public int VariableIndex(string variableName, bool throwOnNotFound = true)
+    {
+        for (int i = 0; i < Variables.Length; i++)
+            if (Variables[i].VariableName == variableName)
+                return i;
+        throw new KeyNotFoundException("The Randomizer does not contain a variable named " + name);
+    }
+    /// <summary>
+    /// Returns the value of a scalar variable given its position in the Variables array.
+    /// </summary>
+    /// <param name="variableIndex">Index within the Variables[].</param>
+    /// <returns>Value of the variable.</returns>
+    public double ScalarValue(int variableIndex)
+    {
+        return Variables[variableIndex].ScalarValue;
+    }
+
+    /// <summary>
+    /// Returns the value of a scalar variable given its position in the Variables array.
+    /// </summary>
+    /// <param name="variableIndex">Index within the Variables[].</param>
+    /// <returns>Value of the variable.</returns>
+    public Vector3 Vector3Value(int variableIndex)
+    {
+        return Variables[variableIndex].Vector3Value;
+    }
+
+    /// <summary>
+    /// Returns the value of a scalar variable given its variableName.
+    /// </summary>
+    /// <param name="variableName">Name in the variables array.</param>
+    /// <returns>Value of the variable.</returns>
+    public double ScalarValue(string variableName)
+    {
+        return Variables[this.VariableIndex(variableName)].ScalarValue;
+    }
+
+    /// <summary>
+    /// Returns the value of a scalar variable given its variableName.
+    /// </summary>
+    /// <param name="variableName">Name in the variables array.</param>
+    /// <returns>Value of the variable.</returns>
+    public Vector3 Vector3Value(string variableName)
+    {
+        return Variables[this.VariableIndex(variableName)].Vector3Value;
+    }
+    #endregion
+
     /// <summary>
     /// Called at level load time.
     /// </summary>
@@ -875,6 +930,33 @@ public class Variable
     FloatVariable mFloatVariable;
     [NonSerialized]
     Vector3Variable mVector3Variable;
+    #endregion
+
+    #region Public properties
+    /// <summary>
+    /// The value of this variable chosen by the solver,
+    /// assuming it is a scalar (non-vector) variable
+    /// </summary>
+    public double ScalarValue
+    {
+        get
+        {
+            return FloatVariable.UniqueValue;
+        }
+    }
+
+    /// <summary>
+    /// The value of this variable chosen by the solver,
+    /// assuming it is a vector variable
+    /// </summary>
+    public Vector3 Vector3Value
+    {
+        get
+        {
+            var v = Vector3Variable;
+            return new Vector3((float)v.X.UniqueValue, (float)v.Y.UniqueValue, (float)v.Z.UniqueValue);
+        }
+    }
     #endregion
 
     #region Reflection interface - writes data back to another unity component

@@ -51,9 +51,9 @@ public class RandomizerVisualizer : MonoBehaviour
             Debug.Assert(particleSystem != null, "particleSystem != null");
             particleSystem.enableEmission = false;
         }
-        xVariableIndex = 0;
-        yVariableIndex = 1;
-        zVariableIndex = -1;
+        xVariableIndex = this.Randomizer.VariableIndex(XVariable);
+        yVariableIndex = this.Randomizer.VariableIndex(YVariable);
+        zVariableIndex = (string.IsNullOrEmpty(ZVariable)) ? -1 : this.Randomizer.VariableIndex(ZVariable);
         solveCount = 0;
         minSolveTime = maxSolveTime = this.totalSolveTime = 0;
     }
@@ -98,9 +98,9 @@ public class RandomizerVisualizer : MonoBehaviour
             }
 #endif
             var position = new Vector3(
-                (float)this.Randomizer.Variables[xVariableIndex].FloatVariable.UniqueValue,
-                (float)this.Randomizer.Variables[yVariableIndex].FloatVariable.UniqueValue,
-                zVariableIndex < 0 ? 0 : (float)this.Randomizer.Variables[zVariableIndex].FloatVariable.UniqueValue);
+                (float)this.Randomizer.ScalarValue(xVariableIndex),
+                (float)this.Randomizer.ScalarValue(yVariableIndex),
+                zVariableIndex < 0 ? 0 : (float)this.Randomizer.ScalarValue(zVariableIndex));
             particleSystem.Emit(Scale*position, Vector3.zero, 0.1f, 1, Color.yellow);
         }
     }
