@@ -1,6 +1,8 @@
-This is a floating-point constraint solver intended for use in games,
-particularly for procedural-content generation.  It includes a Unity
-wrapper to make it easy to use within the Unity editor.
+Craft (Constrained RAndom FloaTs) is a floating-point constraint
+solver intended for use in games, particularly for procedural-content
+generation.  It includes a Unity wrapper to make it easy to use within
+the Unity editor.  It allows you to do things like ask for three
+numbers in given ranges that sum to a given value.
 
 The Craft/ subfolder contains the VS project for the solver itself.
 Build it once and drop the DLL into your Unity project.
