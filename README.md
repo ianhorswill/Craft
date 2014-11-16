@@ -18,7 +18,7 @@ to a .csv file you can look at in Excel, and RandomizerVisualizer which
 does roughly the same thing, but displays the results as a particle system.
 
 Caveats
-=======
+-------
 * This is research software, not a product, so it's not as extensively
 tested as a commercial product.
 * Any constraint solver is ultimately a search algorithm, including this
